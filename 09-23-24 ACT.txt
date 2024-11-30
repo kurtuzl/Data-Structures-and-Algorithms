@@ -1,0 +1,55 @@
+#include <iostream>
+#include <vector>
+#include <algorithm> 
+using namespace std;
+
+int main() {
+
+    vector<string> inventory = {"apples", "bananas", "oranges", "pears"};
+    vector<string> shipment = {"kiwis", "bananas", "grapes"};
+    vector<string> soldOut = {"apples", "oranges"};
+    
+
+    cout << "Current Inventory: [";
+    for (size_t i = 0; i < inventory.size(); ++i) {
+        cout << "\"" << inventory[i] << "\"";
+        if (i != inventory.size() - 1) cout << ", ";
+    }
+    cout << "]" << endl;
+
+
+    cout << "Shipment: [";
+    for (size_t i = 0; i < shipment.size(); ++i) {
+        cout << "\"" << shipment[i] << "\"";
+        if (i != shipment.size() - 1) cout << ", ";
+    }
+    cout << "]" << endl;
+
+
+    cout << "Sold-out items: [";
+    for (size_t i = 0; i < soldOut.size(); ++i) {
+        cout << "\"" << soldOut[i] << "\"";
+        if (i != soldOut.size() - 1) cout << ", ";
+    }
+    cout << "]" << endl;
+
+
+    inventory.insert(inventory.end(), shipment.begin(), shipment.end());
+    
+
+    for (const string& item : soldOut) {
+        inventory.erase(remove(inventory.begin(), inventory.end(), item), inventory.end());
+    }
+    
+    // duplicate remover :(
+    sort(inventory.begin(), inventory.end()); inventory.erase(unique(inventory.begin(), inventory.end()), inventory.end());
+
+    cout << "Updated Inventory: [";
+    for (size_t i = 0; i < inventory.size(); ++i) {
+        cout << "\"" << inventory[i] << "\"";
+        if (i != inventory.size() - 1) cout << ", ";
+    }
+    cout << "]" << endl;
+
+    return 0;
+}
